@@ -657,6 +657,21 @@
 		background: var(--bg-inset);
 		border: 1px solid var(--border);
 		padding: 1.5rem;
+		position: relative;
+		overflow: hidden;
+	}
+	.artifact-evidence::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: repeating-linear-gradient(
+			0deg,
+			transparent,
+			transparent 2px,
+			rgba(255, 255, 255, 0.008) 2px,
+			rgba(255, 255, 255, 0.008) 4px
+		);
+		pointer-events: none;
 	}
 	.evidence-label {
 		font-size: 0.5625rem;
