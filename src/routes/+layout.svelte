@@ -27,11 +27,11 @@
 		z-index: 9999;
 		background: var(--bg);
 		border-bottom: 1px solid var(--border);
-		padding: 0.4rem 1.25rem;
+		padding: 0.6rem 1.25rem;
 		font-family: var(--mono);
-		font-size: 0.625rem;
+		font-size: 0.875rem;
 		letter-spacing: 0.05em;
-		color: var(--fg-faint);
+		color: var(--fg-dim);
 		text-align: center;
 	}
 	.credit-bar a {
@@ -47,7 +47,7 @@
 	.crt-wrapper {
 		position: relative;
 		min-height: 100vh;
-		padding-top: 1.75rem;
+		padding-top: 2.25rem;
 	}
 
 	/* Full-screen CRT overlay */
@@ -59,17 +59,20 @@
 		overflow: hidden;
 	}
 
-	/* Static scanlines */
+	/* Diagonal scanlines */
 	.crt-overlay::before {
 		content: '';
 		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			to bottom,
-			rgba(18, 16, 16, 0) 50%,
-			rgba(0, 0, 0, 0.15) 50%
+		inset: -50%;
+		width: 200%;
+		height: 200%;
+		background: repeating-linear-gradient(
+			-35deg,
+			rgba(0, 0, 0, 0) 0px,
+			rgba(0, 0, 0, 0) 2px,
+			rgba(0, 0, 0, 0.13) 2px,
+			rgba(0, 0, 0, 0.13) 4px
 		);
-		background-size: 100% 4px;
 		z-index: 1;
 	}
 
@@ -86,16 +89,18 @@
 		z-index: 2;
 	}
 
-	/* Sweeping scanline */
+	/* Sweeping band */
 	.crt-scanline {
 		position: absolute;
-		left: 0;
-		right: 0;
-		height: 80px;
+		left: -20%;
+		width: 140%;
+		height: 120px;
 		background: linear-gradient(
-			0deg,
+			-35deg,
 			rgba(0, 0, 0, 0) 0%,
-			rgba(200, 195, 184, 0.06) 10%,
+			rgba(200, 195, 184, 0.04) 40%,
+			rgba(200, 195, 184, 0.06) 50%,
+			rgba(200, 195, 184, 0.04) 60%,
 			rgba(0, 0, 0, 0) 100%
 		);
 		z-index: 3;
@@ -103,8 +108,8 @@
 	}
 
 	@keyframes sweep {
-		0% { top: -80px; }
-		80% { top: -80px; }
+		0% { top: -120px; }
+		80% { top: -120px; }
 		100% { top: 100%; }
 	}
 
