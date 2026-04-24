@@ -3,9 +3,26 @@
 
 	let mounted = $state(false);
 	let scrollY = $state(0);
+	let visibleArtifacts = $state<Set<string>>(new Set());
 
 	onMount(() => {
 		mounted = true;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						visibleArtifacts = new Set([...visibleArtifacts, entry.target.id]);
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+		);
+
+		document.querySelectorAll('.artifact').forEach((el) => observer.observe(el));
+
+		return () => observer.disconnect();
 	});
 
 	const artifacts = [
@@ -342,7 +359,11 @@
 
 	<main class="artifacts">
 		{#each artifacts as artifact, i}
-			<article class="artifact" id="artifact-{artifact.id}">
+			<article
+				class="artifact"
+				class:artifact-visible={visibleArtifacts.has(`artifact-${artifact.id}`)}
+				id="artifact-{artifact.id}"
+			>
 				<div class="artifact-header">
 					<span class="artifact-num">ARTIFACT {artifact.id}</span>
 					<div class="artifact-title-block">
@@ -594,6 +615,13 @@
 	.artifact {
 		margin-bottom: 0;
 		padding-top: 3rem;
+		opacity: 0;
+		transform: translateY(16px);
+		transition: opacity 0.6s ease, transform 0.6s ease;
+	}
+	.artifact-visible {
+		opacity: 1;
+		transform: translateY(0);
 	}
 	.artifact-header {
 		margin-bottom: 2rem;
