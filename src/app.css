@@ -59,6 +59,27 @@ img {
 	display: block;
 }
 
+/* print */
+@media print {
+	body {
+		background: white;
+		color: #111;
+		background-image: none;
+	}
+	a { color: #111; border-bottom-color: #999; }
+	:root {
+		--bg: #fff;
+		--bg-elevated: #f5f5f5;
+		--bg-inset: #fafafa;
+		--fg: #111;
+		--fg-dim: #555;
+		--fg-faint: #999;
+		--accent: #333;
+		--border: #ddd;
+		--border-light: #eee;
+	}
+}
+
 /* scrollbar */
 ::-webkit-scrollbar {
 	width: 6px;
